@@ -1,0 +1,221 @@
+\\growin10plp\
+\\growin10plp\CBP Presentations\Presentation
+
+
+print context;
+context vault ADMINISTRATION person guest
+MQL<5>set context user creator;
+MQL<6>print context;
+context vault ADMINISTRATION person creator
+
+
+
+
+VPLMAdminUser
+OPAdmin1
+
+mhrTraining --> type
+
+mhrDuration --> attribute
+
+mhrTime  --> dimension
+
+MQL<4>add type mhrTraining;
+MQL<5>add dimenstion mhrTime;
+Error: #1900003: Expected keyword - got 'dimenstion'
+MQL<6>add dimension mhrTime;
+MQL<7>modify dimension mhrTime multiplier 100 offset 0;
+Error: #1900068: modify dimension failed
+Error: #1900078: Keyword 'multiplier' not expected
+MQL<8>add attribute mhrDuration dimension mhrTime;
+Error: #1900068: add attribute failed
+Error: #1900030: Derivation type not specified
+MQL<9>add attribute mhrDuration type Number dimension mhrTime;
+Error: #1900068: add attribute failed
+Error: #1900008: Bad value 'Number' for 'type'
+MQL<10>add attribute mhrDuration type Integer dimension mhrTime;
+Error: #1900068: add attribute failed
+Error: #1500672: Dimension mhrTime does not have a default unit.  Update the dimension to include a unit with default modifier.
+MQL<11>list attribute mhr*;
+MQL<12>help attribute;
+
+
+add dimension mhrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0; 
+MQL<17>add dimension mhrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+Error: #1900068: add dimension failed
+Error: #1900005: Name 'mhrTime' not unique
+MQL<18>delete dimension mhrTime;
+MQL<19>add dimension mhrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+MQL<20>list dimension mhr*;
+mhrTime
+MQL<21>list type mhr*;
+mhrTraining
+MQL<22>list attribute mhr*;
+mhrDuration
+
+mql is noun based, not verb based ... so hep add will not make sense .. 
+
+
+MQL<29>list attribute mhr*;
+mhrDuration
+MQL<30>print attribute mhrDuration;
+attribute mhrDuration
+  type integer
+  description
+  default
+  notmultiline
+  notmultivalue
+  notrangevalue
+  notresetOnClone
+  notresetOnRevision
+  nothidden
+  created 8/21/2023 11:59:49 AM
+  modified 8/21/2023 11:59:49 AM
+  history  type:create user:creator date:8/21/2023 11:59:49 AM text:add attribute mhrDuration type integer;
+MQL<31>mod attribute mhrDuration dimension mhrTime;
+Error: #1900068: mod attribute failed
+Error: #1500672: Dimension mhrTime does not have a default unit.  Update the dimension to include a unit with default modifier.
+MQL<32>print dimension mhrTime;
+dimension mhrTime
+  unit hours
+    label
+    multiplier 1.0
+    offset     0.0
+  unit days
+    label
+    multiplier 8.0
+    offset     0.0
+  description
+  nothidden
+  created 8/21/2023 12:07:16 PM
+  modified 8/21/2023 12:07:16 PM
+  history  type:create user:creator date:8/21/2023 12:07:16 PM text:add dimension mhrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+
+MQL<34>mod dimension mhrTime modify unit hours  default;
+MQL<35>mod attribute mhrDuration dimension mhrTime;
+MQL<36>mod dimension mhrTime modify unit days !default;
+MQL<37>print dimension mhrTime;
+dimension mhrTime
+  unit hours
+    label
+    multiplier 1.0
+    offset     0.0
+  unit days
+    label
+    multiplier 8.0
+    offset     0.0
+  description
+  nothidden
+  created 8/21/2023 12:07:16 PM
+  modified 8/21/2023 12:07:16 PM
+  history  type:create user:creator date:8/21/2023 12:07:16 PM text:add dimension mhrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+  history  type:modify user:creator date:8/21/2023 12:17:45 PM text:mod dimension mhrTime modify unit hours  default;
+  history  type:modify user:creator date:8/21/2023 12:18:50 PM text:mod dimension mhrTime modify unit days !default;
+
+MQL<38>print dimension mhrTime !history;
+dimension mhrTime
+  unit hours
+    label
+    multiplier 1.0
+    offset     0.0
+  unit days
+    label
+    multiplier 8.0
+    offset     0.0
+  description
+  nothidden
+  created 8/21/2023 12:07:16 PM
+  modified 8/21/2023 12:07:16 PM
+
+mod type mhrTraining add attribute mhrDuration;
+
+
+*****************************************************************************************************************
+
+more types:   mhrTrainer, mhrStudent 
+
+     attr for trainer:      mhrSkill, string, "java" "c" .... refer the help 
+     attr for student:      mhrBrand  string  "dsgs", "des", "enovia" .... refer the help
+
+	dimension for mhrTime : add more units .... weeks,  months ... see how u can modify dimension to accomodate this
+
+*******************************************************4 pm ..****************************************************************
+
+add rel mhrTraining-mhrTrainer attribute mhrDuration 
+	from
+		type mhrTraining
+		meaning "was conducted by"
+		cardinality one
+		revision replicate
+		clone none
+		propagatemodify
+		propagateconnection  
+	to
+		type mhrTrainer
+		meaning "conducted the"
+		cardinality one
+		revision float
+		clone none
+		notpropagatemodify
+		notpropagateconnection;	
+
+dd rel mhrTraining-mhrStudent attribute mhrDuration 
+	from
+		type mhrTraining
+		meaning "was conducted for"
+		cardinality one
+		revision float
+		clone none
+		propagatemodify
+		propagateconnection  
+	to
+		type mheStudent
+		meaning "attended the"
+		cardinality many
+		revision float
+		clone none
+		notpropagatemodify
+		notpropagateconnection;	
+
+
+
+
+
+	mheTraining1 (attr: 25) ------------------------ 15 --20 ------------------ vishal 
+			-------------------10----------------------- gro
+
+	mheTrainin1 rev1 ------------------revised ----------mheTraining rev 2
+		  |					|
+		trainer1-- revised my skills ..trainer1 rev 2
+
+		3dxpd july (current freshers batch) ---- gro
+	
+		3dxpd aug (seniors batch) ------replicate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
