@@ -159,7 +159,7 @@ add rel mhrTraining-mhrTrainer attribute mhrDuration
 		notpropagatemodify
 		notpropagateconnection;	
 
-dd rel mhrTraining-mhrStudent attribute mhrDuration 
+add rel mhrTraining-mhrStudent attribute mhrDuration 
 	from
 		type mhrTraining
 		meaning "was conducted for"
@@ -169,7 +169,7 @@ dd rel mhrTraining-mhrStudent attribute mhrDuration
 		propagatemodify
 		propagateconnection  
 	to
-		type mheStudent
+		type mhrStudent
 		meaning "attended the"
 		cardinality many
 		revision float
@@ -178,6 +178,23 @@ dd rel mhrTraining-mhrStudent attribute mhrDuration
 		notpropagateconnection;	
 
 
+add rel mhrTraining-mhrStudent1 attribute mhrDuration 
+	from
+		type mhrTraining
+		meaning "was conducted for"
+		cardinality one
+		revision float
+		clone none
+		propagatemodify
+		propagateconnection  
+	to
+		type mhrStudent
+		meaning "attended the"
+		cardinality many
+		revision float
+		clone none
+		notpropagatemodify
+		notpropagateconnection;	
 
 
 
@@ -191,6 +208,35 @@ dd rel mhrTraining-mhrStudent attribute mhrDuration
 		3dxpd july (current freshers batch) ---- gro
 	
 		3dxpd aug (seniors batch) ------replicate
+
+
+
+add bus jneTraining 3DXPD Jun23; // watch for the errors here (no policy)
+
+add policy jneTrainingPolicy type jneTraining sequence A,B,C,...;
+	
+mod policy jneTrainingPolicy 
+	add state CREATE public read,show owner all;
+
+add bus jneTraining 3DXPD Jun23 policy jneTrainingPolicy ; // watch for the errors here (no vault)
+	
+
+list vault;  // out of this list, we choose vplm
+
+add bus jneTraining 3DXPD Jun23 policy jneTrainingPolicy vault vplm; // succeeds.
+
+
+temp query bus jne* * *;
+
+print bus jneTraining 3DXPD Jun23;
+
+print bus jneTraining 3DXPD Jun23 select attribute[jneDuration];
+
+print bus jneTraining 3DXPD Jun23 select attribute[jneDuration] id;
+
+// TNR replaced with id output from previous command
+print bus id select attribute[jneDuration] id;
+
 
 
 
