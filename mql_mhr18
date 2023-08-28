@@ -1,0 +1,696 @@
+
+Matrix Query Language Interface, Version 3DEXPERIENCE R2023x (64 bits)
+
+Copyright (c) 1993-2022 Dassault Systemes.
+All rights reserved.
+MQL<1>set context creator;
+Error: #1900078: Keyword 'creator' not expected
+MQL<2>print context;
+context vault ADMINISTRATION person guest
+MQL<3>set context user creator;
+MQL<4>help type;
+add type NAME [ADD_ITEM {ADD_ITEM}];
+  where ADD_ITEM is:
+    | icon FILENAME                         |
+    | description VALUE                     |
+    | attribute NAME {,NAME}                |
+    | form NAME {,NAME}                     |
+    | method PROG_NAME {,PROG_NAME}         |
+    | TRIGGER PROG_NAME [input ARG_STRING]  |
+    | derived TYPE_NAME                     |
+    | abstract | [true] |                   |
+               | false  |
+    | composed                              |
+    | maybecomposed                         |
+    | !hidden | nothidden                   |
+    | property NAME [value STRING]          |
+    | property NAME to ADMIN [value STRING] |
+  where TRIGGER is:
+    | trigger EVENT_TYPE TRIGGER_TYPE [suppressinbatch] |
+    | trigger PROMOTE_EVENT_TYPE  precommit             |
+    | trigger CREATE_EVENT_TYPE   precreate             |
+  where TRIGGER_TYPE is:
+    | action    |
+    | check     |
+    | override  |
+    | precommit |
+  where PROMOTE_EVENT_TYPE is:
+    | promote |
+    | demote  |
+  where CREATE_EVENT_TYPE is:
+    | create        |
+    | connect       |
+    | majorrevision |
+    | clone         |
+  where EVENT_TYPE is:
+    | create                 |
+    | copy                   |
+    | addinterface           |
+    | addownership           |
+    | batchclone             |
+    | batchrevise            |
+    | changevault            |
+    | changename             |
+    | changeowner            |
+    | changepolicy           |
+    | changetype             |
+    | checkin                |
+    | checkout               |
+    | connect                |
+    | copy                   |
+    | create                 |
+    | grant                  |
+    | delete                 |
+    | disconnect             |
+    | lock                   |
+    | majorrevision          |
+    | minorrevision          |
+    | implicitcopy           |
+    | implicitdelete         |
+    | implicitmajorrevision  |
+    | implicitminorrevision  |
+    | modify                 |
+    | modifyattribute        |
+    | modifydescription      |
+    | removefile             |
+    | removeinterface        |
+    | removeownership        |
+    | reserve                |
+    | revoke                 |
+    | transaction            |
+    | unlock                 |
+    | unreserve              |
+    | CUSTOMEVENT_NAME       |
+  where ADMIN is:
+    | TYPE NAME |
+
+copy type SRC_NAME DST_NAME [MOD_ITEM {MOD_ITEM}];
+
+modify type NAME [MOD_ITEM {MOD_ITEM}];
+  where MOD_ITEM is:
+    | name NAME                                      |
+    | description VALUE                              |
+    | icon FILENAME                                  |
+    | !hidden | nothidden                            |
+    | add    | attribute NAME                        |
+    |        | form      NAME                        |
+    |        | method    PROG_NAME                   |
+    |        | TRIGGER  PROG_NAME [input ARG_STRING] |
+    |        | property NAME to ADMIN [value STRING] |
+    |        | property NAME [value STRING]          |
+    | remove | attribute NAME                        |
+    |        | form      NAME                        |
+    |        | method    PROG_NAME                   |
+    |        | TRIGGER                               |
+    |        | property NAME to ADMIN                |
+    |        | property NAME                         |
+    | property NAME to ADMIN [value STRING]          |
+    | property NAME [value STRING]                   |
+    | derived TYPE_NAME                              |
+    | abstract | [true] |                            |
+               | false  |
+
+delete type NAME;
+
+icon type NAME [file FILENAME] [dir DIRECTORY] [verbose];
+
+print type NAME [SELECT] [DUMP] [tcl] [output FILENAME];
+
+list type [modified MOD_CLAUSE] [SCOPE] NAME_PATTERN [where WHERE_CLAUSE] [SELECT [DUMP [RECORDSEP]]] [tcl] [output FILENAME];
+  where MOD_CLAUSE is:
+    | after DATE        |
+    | between DATE DATE |
+
+  where SCOPE is:
+    | globalonly |
+    | tenantonly |
+
+  where SELECT is:
+    | select [[!|not]substitute] FIELD_NAME {FIELD_NAME} |
+
+  where FIELD_NAME is:
+    SUB_FIELD[.SUB_FIELD{.SUB_FIELD}]
+
+  where SUB_FIELD is:
+    | string          |
+    | string[string]  |
+
+  where DUMP is:
+      dump [SEPARATOR_STRING]
+
+  where RECORDSEP is:
+      recordseparator [SEPARATOR_STRING]
+MQL<5>add type mhr18Training;
+MQL<6>list type mhr*;
+mhr18Training
+mhrTraining
+MQL<7>add dimension mhr18Time unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+MQL<8>list dimension mhr*;
+mhr18Time
+mhrTime
+MQL<9>add attribute mhr18Duration type integer;
+MQL<10>list attribute mhr*;
+mhr18Duration
+mhrDuration
+MQL<11>print mhr18Training;
+Error: #1900003: Expected keyword - got 'mhr18Training'
+MQL<12>print type mhr18Training;
+type mhr18Training
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  nothidden
+  created 8/21/2023 12:42:29 PM
+  modified 8/21/2023 12:42:29 PM
+  history  type:create user:creator date:8/21/2023 12:42:29 PM text:add type mhr18Training;
+MQL<13>print dimension mhr18Time;
+dimension mhr18Time
+  unit hours
+    label
+    multiplier 1.0
+    offset     0.0
+  unit days
+    label
+    multiplier 8.0
+    offset     0.0
+  description
+  nothidden
+  created 8/21/2023 12:47:45 PM
+  modified 8/21/2023 12:47:45 PM
+  history  type:create user:creator date:8/21/2023 12:47:45 PM text:add dimension mhr18Time unit hours multiplier 1 offset 0 unit days !default multiplier 8  offset 0;
+MQL<14>print attribute mhr18Duration;
+attribute mhr18Duration
+  type integer
+  description
+  default
+  notmultiline
+  notmultivalue
+  notrangevalue
+  notresetOnClone
+  notresetOnRevision
+  nothidden
+  created 8/21/2023 12:50:32 PM
+  modified 8/21/2023 12:50:32 PM
+  history  type:create user:creator date:8/21/2023 12:50:32 PM text:add attribute mhr18Duration type integer;
+MQL<15>add type mhr18Trainer;
+MQL<16>add rel mhr18Training-mhr18Trainer attribute mhr18Duration
+from
+type mhr18Training
+meaning "was conducted by"
+cardinality one
+revision replicate
+clone none
+propagatemodify
+propagateconnection
+to
+type mhr18Trainer
+meaning "conducted the"
+cardinality one
+revision float
+clone none
+notpropagatemodify
+notpropagateconnection;
+Error: #1900068: add relationship failed
+Error: #1900005: Name 'mhr18Training-mhr18Trainer' not unique
+MQL<17>add rel mhr18Training-mhr18Trainer attribute mhr18Duration
+from
+type mhr18Training
+meaning "was conducted by"
+cardinality one
+revision replicate
+clone none
+propagatemodify
+propagateconnection
+to
+type mhr18Trainer
+meaning "conducted the"
+cardinality one
+revision float
+clone none
+notpropagatemodify
+notpropagateconnection;
+Error: #1900068: add relationship failed
+System Error: #1500178: business type 'mhr18Trainer' does not exist
+MQL<18>add type mhr18Trainer;
+MQL<19>add rel mhr18Training-mhr18Trainer attribute mhr18Duration
+from
+type mhr18Training
+meaning "was conducted by"
+cardinality one
+revision replicate
+clone none
+propagatemodify
+propagateconnection
+to
+type mhr18Trainer
+meaning "conducted the"
+cardinality one
+revision float
+clone none
+notpropagatemodify
+notpropagateconnection;
+MQL<20>list relationship mhr*;
+mhr18Training-mhr18Trainer
+mhrTraining-mhrTrainer
+MQL<21>add type mhr18Student;
+MQL<22>add rel mhr18Training-mhr18Student attribute mhr18Duration
+from
+type mhr18Training
+meaning "was conducted for"
+cardinality one
+revision float
+clone none
+propagatemodify
+propagateconnection
+to
+type mhr18Student
+meaning "attended the"
+cardinality many
+revision float
+clone none
+notpropagatemodify
+notpropagateconnection;
+MQL<23>
+print mhr18Student;
+Error: #1900003: Expected keyword - got 'mhr18Student'
+MQL<24>print type mhr18Student;
+type mhr18Student
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  nothidden
+  created 8/22/2023 2:54:05 PM
+  modified 8/22/2023 2:54:06 PM
+  history  type:create user:creator date:8/22/2023 2:54:05 PM text:add type mhr18Student;
+MQL<25>list relationship mhr18*;
+mhr18Training-mhr18Student
+mhr18Training-mhr18Trainer
+MQL<26>add policy mhr18TrainingPolicy;
+Warning: #1501010: Policy <mhr18TrainingPolicy> has no STATE definition
+MQL<27>add policy mhr18Policy;
+Warning: #1501010: Policy <mhr18Policy> has no STATE definition
+MQL<28>help policy
+;
+add policy NAME [ITEM {ITEM}];
+  where ITEM is:
+    | description VALUE                           |
+    | icon FILENAME                               |
+    | type | TYPE_NAME {,TYPE_NAME} |             |
+           | all                    |
+    | format | FORMAT_NAME {,FORMAT_NAME} |       |
+             | all                        |
+    | defaultformat FORMAT_NAME                   |
+    | [!|not]enforce                              |
+    | minorsequence REVISION_SEQUENCE             |
+    | majorsequence REVISION_SEQUENCE             |
+    | delimiter DELIMITER                         |
+    | allstate [ALLSTATE_ITEM {,ALLSTATE_ITEM}]   |
+    | state STATE_NAME [STATE_ITEM {,STATE_ITEM}] |
+    | store STORE_NAME                            |
+    | !hidden | nothidden                         |
+    | property NAME [value STRING]                |
+    | property NAME to ADMIN [value STRING]       |
+    | [!|not]excludesecurityindex                 |
+    | mibpolicy                                   |
+  where ALLSTATE_ITEM is:
+    | ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]   |
+    | rule RULENAME [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}]   |
+  where STATE_ITEM is:
+    | [!|not]enforcereserveaccess                            |
+    | action PROGRAM                                         |
+    | check PROGRAM                                          |
+    | icon FILENAME                                          |
+    | ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]   |
+    | rule RULENAME [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}]   |
+    | notify USER_NAME {,USER_NAME} message VALUE            |
+    | notify signer                 message VALUE            |
+    | promote | [true] |                                     |
+    |         | false  |                                     |
+    | minorrevision | [true] |                               |
+    |               | false  |                               |
+    | majorrevision | [true] |                               |
+    |               | false  |                               |
+    | checkouthistory | [true] |                             |
+    |                 | false  |                             |
+    | published | [true] |                                   |
+    |           | false  |                                   |
+    | route USER_NAME message VALUE                          |
+    | block STATE_NAME                                       |
+    | unblock STATE_NAME                                     |
+    | signature SIGN_NAME [SIGNATURE_ITEM {,SIGNATURE_ITEM}] |
+    | version | [true] |                                     |
+    |         | false  |                                     |
+    | stateproperty NAME [value STRING]                      |
+    | stateproperty NAME to ADMIN [value STRING]             |
+    | TRIGGER PROG_NAME [input ARG_STRING]                   |
+    | [!|not]splitchangetypeinterfaceaccess                  |
+  where SIGNATURE_ITEM is:
+    | approve USER_NAME {,USER_NAME} |
+    | ignore USER_NAME {,USER_NAME}  |
+    | reject USER_NAME {,USER_NAME}  |
+    | branch STATE_NAME              |
+    | filter EXPRESSION              |
+  where TRIGGER is:
+    trigger EVENT_TYPE | action    |
+                       | check     |
+                       | override  |
+  where EVENT_TYPE is:
+    | approve    |
+    | demote     |
+    | disable    |
+    | enable     |
+    | ignore     |
+    | override   |
+    | promote    |
+    | reject     |
+    | schedule   |
+    | unsign     |
+  where ADMIN is:
+    | TYPE NAME |
+
+copy policy SRC_NAME DST_NAME [MOD_ITEM {MOD_ITEM}];
+
+modify policy NAME [MOD_ITEM {MOD_ITEM}];
+  where MOD_ITEM is:
+    | defaultformat FORMAT_NAME                               |
+    | description VALUE                                       |
+    | icon FILENAME                                           |
+    | | add    | type | TYPE_NAME {,TYPE_NAME} |              |
+    | | remove |      | all                                   |
+    | | add    | format | FORMAT_NAME {,FORMAT_NAME} |        |
+    | | remove |        | all                                 |
+    | | add    | allstate [ALLSTATE_ITEM {ALLSTATE_ITEM}]     |
+    | | remove | allstate                                     |
+    | | add    | state STATE_NAME [before STATE_NAME]
+                             [STATE_ITEM {STATE_ITEM}]        |
+    | | remove | state STATE_NAME                             |
+    | | remove | minorsequence                                |
+    | | remove | majorsequence                                |
+    | name VALUE                                              |
+    | minorsequence REVISION_SEQUENCE                         |
+    | majorsequence REVISION_SEQUENCE                         |
+    | allstate  [ALLSTATE_MOD_ITEM {ALLSTATE_MOD_ITEM}]       |
+    | state STATE_NAME [STATE_MOD_ITEM {STATE_MOD_ITEM}]      |
+    | store STORE_NAME                                        |
+    | !hidden | nothidden                                     |
+    | add    | property NAME to ADMIN [value STRING]          |
+    |        | property NAME [value STRING]                   |
+    | remove | property NAME to ADMIN                         |
+    |        | property NAME                                  |
+    | property NAME to ADMIN [value STRING]                   |
+    | property NAME [value STRING]                            |
+    | !excludesecurityindex | notexcludesecurityindex         |
+  where ALLSTATE_MOD_ITEM is:
+    | add ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]  |
+    | remove ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]  |
+    | add rule RULE_NAME  [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}]   |
+    | remove rule RULE_NAME [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}] |
+  where STATE_MOD_ITEM is:
+    | [!|not]enforcereserveaccess                                   |
+    | [!|not]enforce                                                |
+    | action COMMAND                                                |
+    | check COMMAND                                                 |
+    | icon FILENAME                                                 |
+    | name VALUE                                                    |
+    | add ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]      |
+    | remove ACCESS_USER ACCESS_ITEM {,ACCESS_ITEM} [{USER_ITEM}]   |
+    | add rule RULE_NAME  [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}]   |
+    | remove rule RULE_NAME [all | MAPPED_ACCESS_USER { MAPPED_ACCESS_USER}] |
+    | | add    | notify USER_NAME {,USER_NAME} [message VALUE]      |
+    | | add    | notify signer                 [message VALUE]      |
+    | | remove | notify USER_NAME {,USER_NAME} [message VALUE]      |
+    | | remove | notify signer                 [message VALUE]      |
+    | notify message VALUE                                          |
+    | promote | [true] |                                            |
+    |         | false  |                                            |
+    | checkouthistory | [true] |                                    |
+    |                 | false  |                                    |
+    | published | [true] |                                          |
+    |           | false  |                                          |
+    | minorrevision | [true] |                                      |
+    |               | false  |
+    | majorrevision | [true] |                                      |
+    |               | false  |
+    | | add    | route USER_NAME [message VALUE]                    |
+    | | remove | route USER_NAME [message VALUE]                    |
+    | route message VALUE                                           |
+    | block STATE_NAME                                              |
+    | unblock STATE_NAME                                            |
+    | | add    | signature SIGN_NAME
+                             [SIGNATURE_ITEM {SIGNATURE_ITEM}]      |
+    | | remove | signature SIGN_NAME                                |
+    | signature SIGN_NAME [SIGNATURE_MOD_ITEM {SIGNATURE_MOD_ITEM}] |
+    | version | [true] |                                            |
+    |         | false  |
+    | | add    | TRIGGER PROG_NAME                                  |
+    | | remove | TRIGGER                                            |
+    | [!|not]splitchangetypeinterfaceaccess                         |
+  where SIGNATURE_MOD_ITEM is:
+    | name VALUE                                |
+    | | add    | approve USER_NAME {,USER_NAME} |
+    | | remove |
+    | | add    | ignore USER_NAME {,USER_NAME}  |
+    | | remove |
+    | | add    | reject USER_NAME {,USER_NAME}  |
+    | | remove |
+    | | add    | branch STATE_NAME              |
+    | | remove |
+    | | add    | filter EXPRESSION              |
+    | | remove |
+
+  where ACCESS_USER is:
+    | [revoke] [login] public [key STRING]          |
+    | [revoke] [login] owner  [key STRING]          |
+    | [revoke] [login] user USER_NAME [key STRING]  |
+
+  where MAPPED_ACCESS_USER is:
+    | ruleuser public (all | rulekey STRING)  [ statekey STRING]     |
+    | ruleuser owner  rulekey STRING  [ statekey STRING]     |
+    | ruleuser USER_NAME [ all | rulekey STRING]  [stateuser NAME] [statekey STRING]   |
+
+  where USER_ITEM is:
+    | [any|single|ancestor|descendant] organization                       |
+    | [any|single|ancestor|descendant] project                            |
+    | [any|context] owner                                                 |
+    | [any|no|context|inclusive] reserve                                  |
+    | [any|no|public|protected|private|notprivate|ppp] maturity           |
+    | [filter|localfilter] EXPR                                           |
+    | [branch STATE_NAME]                                                 |
+
+  where ACCESS_ITEM is:
+    | all                   |
+    | none                  |
+    | [not]approve          |
+    | [not]branchchangename |
+    | [not]branchdelete     |
+    | [not]branchfrom       |
+    | [not]branchinit       |
+    | [not]branchmerge      |
+    | [not]branchmodify     |
+    | [not]branchrestore    |
+    | [not]branchactivate   |
+    | [not]branchdeactivate |
+    | [not]changevault      |
+    | [not]changename       |
+    | [not]changeowner      |
+    | [not]changepolicy     |
+    | [not]changesov        |
+    | [not]changetype       |
+    | [not]checkin          |
+    | [not]checkout         |
+    | [not]contentreserve   |
+    | [not]contentunreserve |
+    | [not]create           |
+    | [not]grant            |
+    | [not]delete           |
+    | [not]demote           |
+    | [not]disable          |
+    | [not]enable           |
+    | [not]execute          |
+    | [not]freeze           |
+    | [not]fromconnect      |
+    | [not]fromdisconnect   |
+    | [not]ignore           |
+    | [not]lock             |
+    | [not]majorrevise      |
+    | [not]modify           |
+    | [not]modifyform       |
+    | [not]override         |
+    | [not]promote          |
+    | [not]read             |
+    | [not]reject           |
+    | [not]reserve          |
+    | [not]revoke           |
+    | [not]revise           |
+    | [not]schedule         |
+    | [not]show             |
+    | [not]thaw             |
+    | [not]toconnect        |
+    | [not]todisconnect     |
+    | [not]unlock           |
+    | [not]unreserve        |
+    | [not]viewform         |
+    | [not]addinterface     |
+    | [not]removeinterface  |
+
+delete policy NAME;
+
+list policy [modified MOD_CLAUSE] [SCOPE] NAME_PATTERN [where WHERE_CLAUSE] [SELECT [DUMP [RECORDSEP]]] [tcl] [output FILENAME];
+  where MOD_CLAUSE is:
+    | after DATE        |
+    | between DATE DATE |
+
+  where SCOPE is:
+    | globalonly |
+    | tenantonly |
+
+print policy NAME [SELECT] [DUMP] [tcl] [output FILENAME];
+  where SELECT is:
+    | select [[!|not]substitute] FIELD_NAME {FIELD_NAME} |
+
+  where FIELD_NAME is:
+    SUB_FIELD[.SUB_FIELD{.SUB_FIELD}]
+
+  where SUB_FIELD is:
+    | string          |
+    | string[string]  |
+
+  where DUMP is:
+      dump [SEPARATOR_STRING]
+
+  where RECORDSEP is:
+      recordseparator [SEPARATOR_STRING]
+MQL<29>add policy mhr18Policy;
+Error: #1900068: add policy failed
+Error: #1900005: Name 'mhr18Policy' not unique
+MQL<30>add policy mhr18Policy1;
+Warning: #1501010: Policy <mhr18Policy1> has no STATE definition
+MQL<31>add policy mhr18Policy type mhr18Training sequence A,B,C;
+Error: #1900068: add policy failed
+Error: #1900005: Name 'mhr18Policy' not unique
+MQL<32>list policy mhr18*;
+mhr18Policy
+mhr18Policy1
+mhr18TrainingPolicy
+MQL<33>delete policy mhr18Policy;
+MQL<34>delete policy mhr18Policy1;
+MQL<35>delete policy mhr18TrainingPolicy;
+MQL<36>add policy mhr18Policy type mhr18Training;
+Warning: #1501010: Policy <mhr18Policy> has no STATE definition
+MQL<37>list policy mhr18*;
+mhr18Policy
+MQL<38>mod policy mhr18Policy add state CREATE public read,show owner all;
+MQL<39>list policy mhr18*;
+mhr18Policy
+MQL<40>print policy mhr18Policy;
+policy mhr18Policy
+  description
+  type mhr18Training
+  locking not enforced
+  state CREATE
+    minorrevisionable true
+    majorrevisionable true
+    versionable true
+    promote false
+    checkout history true
+    published false
+    public read,show
+    owner all
+  nothidden
+  created 8/24/2023 2:19:22 PM
+  modified 8/24/2023 2:25:09 PM
+  history  type:create user:creator date:8/24/2023 2:19:22 PM text:add policy mhr18Policy type mhr18Training;
+  history  type:modify user:creator date:8/24/2023 2:25:09 PM text:mod policy mhr18Policy add state CREATE public read,show owner all;
+MQL<41>print bus mhr18*;
+Error: #1900068: print business object failed
+Error: #1600035: Expected name
+MQL<42>print bus mhr18Policy;
+Error: #1900068: print business object failed
+Error: #1600035: Expected name
+MQL<43>list vault;
+eService Administration
+eService Production
+eService Sample
+vplm
+vplm_archive
+SIXW
+DataSetup
+MQL<44>add bus mhr18Training 3DXPD Jul23 policy mhr18Policy vault vplm;
+MQL<45>list bus mhr18*;
+Error: #1900068: list business object failed
+Error: #1900003: Expected keyword - got 'mhr18*'
+MQL<46>temp query bus mhr18* * *;
+mhr18Training 3DXPD Jul23
+MQL<47>print bus mhr18Training 3DXPD Jul23;
+BusinessObject mhr18Training 3DXPD Jul23
+  lattice vplm
+  policy mhr18Policy
+  description
+  created 8/24/2023 2:38:57 PM
+  modified 8/24/2023 2:38:57 PM
+  owner creator
+  unlocked
+  locking not enforced
+  current state CREATE
+    status enabled
+    attained 8/24/2023 2:38:57 PM
+    minorrevisionable yes
+    majorrevisionable yes
+    published no
+    versionable yes
+    access all
+  in current state
+    minorrevisionable yes
+    majorrevisionable yes
+    versionable yes
+    access all
+  promotable yes
+  revision list
+    mhr18Training 3DXPD Jul23
+  history
+    create - user: creator  time: 8/24/2023 2:38:57 PM  state: CREATE  revisioned from:
+MQL<48>print bus mhr18Training 3DXPD Jul23 select attribute[mhr18Duration];
+business object  mhr18Training 3DXPD Jul23
+    attribute[mhr18Duration] =
+MQL<49>print bus id select attribute[mhr18Duration] id;
+Error: #1900068: print business object failed
+Error: #1500029: No business object 'Error getting object name select attribute[mhr18Duration]' found
+System Error: #1500178: business type '0' does not exist
+MQL<50>print bus mhr18Training 3DXPD Jul23 select attribute[mhr18Duration] id;
+business object  mhr18Training 3DXPD Jul23
+    attribute[mhr18Duration] =
+    id = 39690.42510.47735.47532
+MQL<51>print bus 39690.42510.47735.47532 select attribute[mhr18Duration] id;
+business object  mhr18Training 3DXPD Jul23
+    attribute[mhr18Duration] =
+    id = 39690.42510.47735.47532
+MQL<52>add bus mhr18Training 3DXPD Aug23 policy mhr18TrainingPolicy vault "eService Sample";
+Error: #1900068: add business object failed
+System Error: #1500178: policy 'mhr18TrainingPolicy' does not exist
+MQL<53>add bus mhr18Training 3DXPD Aug23 policy mhr18Policy vault "eService Sample";
+MQL<54>temp query bus mhr18Training * * vault *;
+mhr18Training 3DXPD Aug23
+mhr18Training 3DXPD Jul23
+MQL<55>temp query bus mhr18Training * Aug23 vault *;
+mhr18Training 3DXPD Aug23
+MQL<56>temp query bus mhr18Training 3DXPD Aug23 vault *;
+mhr18Training 3DXPD Aug23
+MQL<57>temp query bus mhr18Training 3DXPD Jul23 vault *;
+mhr18Training 3DXPD Jul23
+MQL<58>list bus mhr18*;
+Error: #1900068: list business object failed
+Error: #1900003: Expected keyword - got 'mhr18*'
+MQL<59>list bus mhr18Training*;
+Error: #1900068: list business object failed
+Error: #1900003: Expected keyword - got 'mhr18Training*'
+MQL<60>list bus mhr18Training;
+Error: #1900068: list business object failed
+Error: #1900003: Expected keyword - got 'mhr18Training'
+MQL<61>temp query bus mhr18*  * * vault *;
+mhr18Training 3DXPD Aug23
+mhr18Training 3DXPD Jul23
+MQL<62>
