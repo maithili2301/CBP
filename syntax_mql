@@ -1,0 +1,15 @@
+
+set context user creator;
+add type <typeName>;
+add attribute <attributeName> type <integer/String> ;
+mod type <typeName> add attribute <attributeName>;
+add policy <policyname> type <typeName>;
+mod policy <policyName> add state CREATE public read,show owner all;
+add bus <typeName> 3DXPD Jul23 policy <policyName> vault <vaultName>;
+Type : <typeName>
+name : Jul23
+revision : Unique Jul23
+add bus <typeName> <revisionName>  policy <policyName> vault <vaultName>;
+temp query bus <typeName> * * select vault id owner;
+mod bus <id> <attributeName> <set_value>; 
+ 
