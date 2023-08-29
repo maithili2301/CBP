@@ -694,3 +694,629 @@ MQL<61>temp query bus mhr18*  * * vault *;
 mhr18Training 3DXPD Aug23
 mhr18Training 3DXPD Jul23
 MQL<62>
+print attribute
+
+Error: #1900068: print attribute failed
+Error: #1900004: Expected name
+MQL<63>help attribute
+
+add attribute NAME type | date    | [ADD_ITEM {ADD_ITEM}];
+                        | integer |
+                        | string  |
+                        | real    |
+                        | boolean |
+                        | binary  |
+                        | enum        |
+                        | shortbinary |
+
+convert attribute NAME to units UNITNAME [commit N] [output FILENAME] searchcriteria SEARCHCRITERIA;
+
+copy attribute SRC_NAME DST_NAME [MOD_ITEM {MOD_ITEM}];
+
+check attribute NAME VALUE [ | businessobject BO_NAME | ];
+                             | connection ID          |
+
+delete attribute NAME;
+
+list attribute [modified MOD_CLAUSE] [SCOPE] NAME_PATTERN [where WHERE_CLAUSE] [SELECT [DUMP [RECORDSEP]]] [tcl] [output FILENAME];
+  where MOD_CLAUSE is:
+    | after DATE        |
+    | between DATE DATE |
+
+  where SCOPE is:
+    | globalonly |
+    | tenantonly |
+
+modify attribute NAME [MOD_ITEM {MOD_ITEM}];
+
+print attribute NAME [SELECT] [DUMP] [tcl] [output FILENAME];
+
+  where ADD_ITEM is:
+    | default VALUE | !hasdefault | nothasdefault |
+    | description VALUE                    |
+    | icon FILENAME                        |
+    | rule NAME                            |
+    | maxlength VALUE                      |
+    | owner ADMIN                          |
+    | range RANGE_ITEM {range RANGE_ITEM}  |
+    | TRIGGER PROG_NAME [input ARG_STRING] |
+    | dimension DIMENSION_NAME            |
+    | format FORMAT                       |
+    | keepformat                          |
+    | [!|not]multivalue      |
+    | [!|not]rangevalue      |
+    | [!|not]multiline       |
+    | !hidden | nothidden    |
+    | [!|not]resetonclone    |
+    | [!|not]resetonrevision |
+    | property NAME [value STRING]          |
+    | property NAME to ADMIN [value STRING] |
+
+  where MOD_ITEM is:
+    | name NAME                            |
+    | default VALUE | !hasdefault | nothasdefault |
+    | description VALUE                    |
+    | maxlength VALUE                      |
+    | dimension DIMENSION_NAME             |
+    | icon FILENAME                 |
+    | add    | dimension  DIMENSION_NAME |  |
+    |        | range RANGE_ITEM          |  |
+    |        | TRIGGER PROG_NAME         |  |
+    |        | rule NAME                 |  |
+    | remove | dimension  DIMENSION_NAME |  |
+    |        | range RANGE_ITEM          |  |
+    |        | TRIGGER                   |  |
+    |        | rule NAME                 |  |
+    |        | keepformat                |  |
+    |        | format                    |  |
+    | owner ADMIN                           |
+    | [!|not]multivalue                              |
+    | [!|not]rangevalue                              |
+    | [!|not]multiline                               |
+    | !hidden | nothidden                            |
+    | [!|not]resetonclone                            |
+    | [!|not]resetonrevision                         |
+    | add    | property NAME to ADMIN [value STRING] |
+    |        | property NAME [value STRING]          |
+    | remove | property NAME to ADMIN                |
+    |        | property NAME                         |
+    | property NAME to ADMIN [value STRING]          |
+    | property NAME [value STRING]                   |
+
+  where RANGE_ITEM is:
+    | | = | != | < | > | <= | >= | VALUE              |
+    | | smatch | !smatch | match | !match | PATTERN   |
+    | between VALUE | inclusive | VALUE | inclusive | |
+    |               | exclusive |       | exclusive | |
+    | program PROG_NAME [input ARG_STRING]            |
+
+  where TRIGGER is:
+    trigger EVENT_TYPE      | action    |
+                            | check     |
+                            | override  |
+  where EVENT_TYPE is:
+    | modify   |
+  where ADMIN is:
+    | TYPE NAME |
+  where SELECT is:
+    | select [[!|not]substitute] FIELD_NAME {FIELD_NAME} |
+
+  where FIELD_NAME is:
+    SUB_FIELD[.SUB_FIELD{.SUB_FIELD}]
+
+  where SUB_FIELD is:
+    | string          |
+    | string[string]  |
+
+  where DUMP is:
+      dump [SEPARATOR_STRING]
+
+  where RECORDSEP is:
+      recordseparator [SEPARATOR_STRING]
+ where SEARCHCRITERIA is defined recursively as:
+    | set NAME                                                        |
+    | query NAME                                                      |
+    | temp set BO_NAME{,BO_NAME}                                      |
+    | temp query businessobject TYPE NAME REVISION [TEMP_QUERY_ITEM {TEMP_QUERY_ITEM}] [casesensitive] |
+    | expand | [businessobject] BO_NAME | [EXPAND_ITEM {EXPAND_ITEM}] |
+    |        | on SEARCHCRITERIA        | [EXPAND_ITEM {EXPAND_ITEM}] |
+    | SEARCHCRITERIA BINARY_OP SEARCHCRITERIA                         |
+    | [( {( }]SEARCHCRITERIA [ ){ )}]                                 |
+ where REVISION is:
+     | [SCOPE/]REVISION_PATTERN                                       |
+     | SCOPE                                                          |
+ where SCOPE is:
+    | scope:MIB                           |
+    | scope:UN                            |
+
+MQL<64>list attribute mhr*;
+mhr18Duration
+mhrDuration
+MQL<65>temp query bus mhr18Training * * select attribute[mhr18Duration] id;
+businessobject mhr18Training 3DXPD Aug23
+    attribute[mhr18Duration] =
+    id = 60860.52778.47735.47620
+businessobject mhr18Training 3DXPD Sept23
+    attribute[mhr18Duration] =
+    id = 60860.52778.1200.23706
+businessobject mhr18Training 3DXPD Jul23
+    attribute[mhr18Duration] =
+    id = 39690.42510.47735.47532
+MQL<66>temp query bus mhr18Training * * select id;
+businessobject mhr18Training 3DXPD Aug23
+    id = 60860.52778.47735.47620
+businessobject mhr18Training 3DXPD Sept23
+    id = 60860.52778.1200.23706
+businessobject mhr18Training 3DXPD Jul23
+    id = 39690.42510.47735.47532
+MQL<67>mod bus 60860.52778.47735.47620 mhr18Duration 9;
+Warning: #1500218: Business object has no attribute 'mhr18Duration'
+MQL<68>mod bus 60860.52778.47735.47620 attribute[mhr18Duration] 9;
+Error: #1900068: mod business object failed
+Error: #1900016: Expected an attribute or a keyword - got 'attribute[mhr18Duration]'
+MQL<69>mod bus 60860.52778.1200.23706 mhr18Duration 9;
+Warning: #1500218: Business object has no attribute 'mhr18Duration'
+MQL<70>print type mhr18Training;
+type mhr18Training
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  policy mhr18Policy
+  nothidden
+  created 8/21/2023 12:42:29 PM
+  modified 8/22/2023 2:54:06 PM
+  history  type:create user:creator date:8/21/2023 12:42:29 PM text:add type mhr18Training;
+MQL<71>mod bus 60860.52778.1200.23706 mhr18Duration 9;
+Warning: #1500218: Business object has no attribute 'mhr18Duration'
+MQL<72>help bus;
+add businessobject TYPE NAME REVISION policy POLICY_NAME [ITEM {ITEM}];
+
+approve businessobject BO_NAME signature SIGN_NAME [comment VALUE];
+
+checkin businessobject BO_NAME [unlock] [|server|]
+                                         |client|
+         [format FORMAT_NAME] [store STORE_NAME] [append] FILENAME { FILENAME};
+
+checkout businessobject BO_NAME [lock] [|server|]
+                                        |client|
+         [format FORMAT_NAME] [file |FILENAME{,FILENAME}|] [DIRECTORY];
+                                    |all                |
+
+connect businessobject BO_NAME relationship NAME |  to  | BO_NAME  [preserve]
+                                                 | from |
+  [owner VALUE] [organization VALUE] [project VALUE ]
+  [physicalid VALUE] [logicalid VALUE ]
+  [ATTRIBUTE_NAME VALUE {ATTRIBUTE_NAME VALUE}];
+
+connect businessobject BO_NAME vcfile PATH VERSION [VCFILE_ITEM {VCFILE_ITEM}];
+
+connect businessobject BO_NAME vcfolder PATH config NAME [VCFOLDER_ITEM {VCFOLDER_ITEM}];
+
+connect businessobject BO_NAME vcmodule PATH VERSION [VCMODULE_ITEM {VCMODULE_ITEM}];
+
+copy businessobject BO_NAME to NAME REVISION [!|not]history ] [!|not]path ] [MOD_ITEM {MOD_ITEM}];
+
+deduplicatefile businessobject BO_NAME [format FORMAT_NAME] [file FILENAME];
+
+duplicatefile businessobject BO_NAME [format FORMAT_NAME] [file FILENAME];
+
+delete businessobject BO_NAME [[format FORMAT_NAME] file |FILENAME{,FILENAME}|];
+                                                         |all                |
+
+delete businessobject BO_NAME | vcfile   | [index NUMBER] [version];
+                              | vcfolder |
+
+demote businessobject BO_NAME;
+
+disable businessobject BO_NAME [state STATE_NAME];
+
+disconnect businessobject BO_NAME relationship NAME |  to  | BO_NAME [preserve];
+                                                    | from |
+
+disconnect businessobject BO_NAME | vcfile   | [index NUMBER];
+                                  | vcfolder |
+                                  | vcmodule |
+
+enable businessobject BO_NAME [state STATE_NAME];
+
+execute businessobject BO_NAME method METHOD_NAME [ARG {ARG}];
+
+expand businessobject BO_NAME [| from [relationship PATTERN] [type PATTERN] |]
+                               | to   [relationship PATTERN] [type PATTERN] |
+                               | fixedpoints ID{,ID}                        |
+                               | withroots                                  |
+                               | activefilters [reversefilters]             |
+                               | filter PATTERN [reversefilters]            |
+                               | preventduplicates [expression EXPRESSION]  |
+       [recurse [to | N   |]] [| [ into|onto ] set NAME          |]
+                    | all |
+                    | end |
+                    | rel |
+                               | [SELECT_BO] [SELECT_REL]        |
+                               | [DUMP [RECORDSEP]] [tcl] [output FILENAME] |
+                               | terse                           |
+                               | limit N                         |
+                               | size N                          |
+
+image businessobject BO_NAME [file FILENAME] [dir DIRECTORY] [verbose];
+
+ignore businessobject BO_NAME signature SIGN_NAME [comment VALUE];
+
+list businessobject [vault VAULT_NAME];
+
+check businessobject cestamp ID CESTAMP {ID CESTAMP};
+
+lock businessobject BO_NAME;
+
+modify businessobject BO_NAME [MOD_ITEM {MOD_ITEM}];
+
+override businessobject BO_NAME [state STATE_NAME];
+
+print businessobject BO_NAME [SELECT] [DUMP] [tcl] [output FILENAME];
+
+print businessobject selectable;
+
+promote businessobject BO_NAME;
+
+reject businessobject BO_NAME signature SIGN_NAME [comment VALUE];
+
+relocateFile  businessobject BO_NAME [format FORMAT_NAME][file FILENAME] store STORENAME;
+
+revise businessobject BO_NAME [minor | major] [to REVISION_NAME] [file | [!|not]file] [vault VAULT_NAME];
+
+revise businessobject BO_NAME [minor | major] [minororder N] [file | [!|not]file] [vault VAULT_NAME];
+
+revise businessobject BO_NAME [minor] [minororder N] [file | [!|not]file] [linear | [!|not]linear] [vault VAULT_NAME];
+
+revise businessobject BO_NAME [minor | major] bus TARGET_BO_NAME [file | [!|not]file] [COMPOSEE_ENTRY {COMPOSEE_ENTRY}];
+
+sync businessobject BO_NAME [SYNC_ITEM {SYNC_ITEM}];
+
+  where SYNC_ITEM is:
+    | overwrite                            |
+    | update                               |
+    | from [store | location NAME {,NAME}  |
+    | to   [store | location NAME {,NAME}  |
+    | format FORMAT_NAME                   |
+    | file FILENAME{,FILENAME}             |
+    | zip                                  |
+
+purge businessobject BO_NAME [location NAME {,NAME}];
+
+unlock businessobject BO_NAME [comment TEXT];
+
+updatestate businessobject BO_NAME;
+
+unsign businessobject BO_NAME signature|SIGN_NAME| [comment Value];
+                                        |all      |
+
+  where BO_NAME is:
+    | TYPE_NAME NAME REVISION [in VAULT] |
+    | ID                                 |
+
+  where ITEM is:
+    | description VALUE                  |
+    | image FILENAME                     |
+    | vault VAULT_NAME                   |
+    | name NAME [revision REVISION]      |
+    | owner USER_NAME                    |
+    | organization USER_NAME             |
+    | project USER_NAME                  |
+    | policy POLICY_NAME                 |
+    | state STATE_NAME STATE_ITEM        |
+    | type TYPE_NAME                     |
+    | originated DATE                    |
+    | modified DATE                      |
+    | current STATE_NAME                 |
+    | physicalid UUID                    |
+    | logicalid UUID                     |
+    | versionid UUID majorid UUID        |
+    | majororder VALUE                   |
+    | minororder VALUE                   |
+    | ATTRIBUTE_NAME VALUE               |
+    | interface INTERFACE_NAME           |
+    | access ACCESSID_ID [as MASK]       |
+    | ownership OWNERSHIP_ID [as MASK]   |
+    | composer BO_NAME                   |
+    | relcomposer CONNECTION             |
+    | composition RELTYPE [comrelphyicalid UUID] [comrellogicalid UUID] [comrelmajorid UUID] |
+    | BRANCH_IDENTIFIER [contenturl CONTENT_URL] |
+
+  where BRANCH_IDENTIFIER is:
+    | module MODULENAME branch BRANCHNAME |
+    | branch branch:UUID                  |
+
+  where MOD_ITEM is:
+    | description VALUE                                     |
+    | image FILENAME                                        |
+    | vault VAULT_NAME [update set]                         |
+    | name NAME [revision REVISION]                         |
+    | owner USER_NAME                                       |
+    | organization USER_NAME                                |
+    | project USER_NAME                                     |
+    | GRANT_ITEM                                            |
+    | REVOKE_ITEM                                           |
+    | policy POLICY_NAME                                    |
+    | state STATE_NAME STATE_ITEM                           |
+    | current NEW_STATE_NAME                                |
+    | type TYPE_NAME                                        |
+    | originated DATE                                       |
+    | modified DATE                                         |
+    | ATTRIBUTE_NAME VALUE                                  |
+    | add interface INTERFACE_NAME                          |
+    | remove interface INTERFACE_NAME                       |
+    | add access ACCESS_ID [as MASK]                        |
+    | remove access ACCESS_ID                               |
+    | add ownership OWNERSHIP_ID [as MASK]                  |
+    | remove ownership OWNERSHIP_ID                         |
+    | add history VALUE [comment VALUE]                     |
+    | delete history DEL_HISTORY_ITEM                       |
+    | remove path PATH_PATTERN                              |
+    | move [format FORMAT_NAME] from BO_NAME FILES_TO_COPY  |
+    | [!|not]published                                      |
+    | rename [format FORMAT_NAME] [ [!|not]propagaterename ] file FILENAME TOFILENAME |
+    | reserve [user USER] [comment VALUE]                   |
+    | unreserve                                             |
+    | !reserve                                              |
+    | [!|not]published                                      |
+    | vcconnection [index NUMBER] VC_MOD_ITEM{,VC_MOD_ITEM} |
+    | updatestamp UUID                                      |
+
+  where STATE_ITEM is:
+    | schedule DATE |
+    | actual DATE   |
+    | start DATE    |
+    | end DATE      |
+    | duration N    |
+
+  where FILES_TO_COPY is:
+    | format formatName                            |
+    | [format formatName] file FILENAME{,FILENAME} |
+    | all                                          |
+
+  where VC_MOD_ITEM is:
+    | incomplete                                     |
+    | complete                                       |
+    | store NAME                                     |
+    | format NAME                                    |
+    | path STRING                                    |
+    | description STRING                             |
+    | versionid STRING                               |
+    | versiontag STRING                              |
+    | branchid STRING                                |
+    | branchtag STRING                               |
+    | selector STRING                                |
+    | qualifier STRING                               |
+    | config STRING                                  |
+    | lock                                           |
+    | unlock                                         |
+    | copyfromstore NAME path STRING [VERSION]       |
+    | copyfromstore NAME path STRING [config STRING] |
+    | add versiontag STRING                          |
+    | add branchtag STRING                           |
+    | remove versiontag STRING                       |
+    | remove branchtag STRING                        |
+
+  where VERSION is:
+    | versionid STRING                    |
+    | versiontag STRING                   |
+    | branchid STRING [qualifier STRING]  |
+    | branchtag STRING [qualifier STRING] |
+    | selector STRING                     |
+
+  where VCFILE_ITEM is:
+    | config NAME |
+    | store NAME  |
+    | format NAME |
+    | lock        |
+    | incomplete  |
+    | complete    |
+
+  where VCFOLDER_ITEM is:
+    | store NAME  |
+    | format NAME |
+    | incomplete  |
+    | complete    |
+
+  where VCMODULE_ITEM is:
+    | config NAME |
+    | store NAME  |
+    | format NAME |
+
+  where COMPOSEE_ENTRY is:
+    | composee SOURCE_COMPOSEE_BO_NAME |
+    | bus TARGET_COMPOSEE_BO_NAME      |
+    | [file | [!|not]file]             |
+
+  where SELECT is:
+    | select [[!|not]substitute] FIELD_NAME {FIELD_NAME} |
+
+  where FIELD_NAME is:
+    SUB_FIELD[.SUB_FIELD{.SUB_FIELD}]
+
+  where SUB_FIELD is:
+    | string          |
+    | string[string]  |
+
+  where SELECT_BO is:
+      select businessobject [FIELD_NAME {FIELD_NAME}] [where QUERY_EXPR]
+
+  where SELECT_REL is:
+      select relationship [FIELD_NAME {FIELD_NAME}] [where QUERY_EXPR]
+
+  where DUMP is:
+      dump [SEPARATOR_STRING]
+
+  where RECORDSEP is:
+      recordseparator [SEPARATOR_STRING]
+
+  where N is:
+      0 to recurse to the end or integer number of levels to recurse
+
+ where GRANT_ITEM is:
+ grant USER_NAME {,USER_NAME} access ACCESS_MASK [key VALUE]
+
+ where REVOKE_ITEM is:
+ revoke [all] [grantor USER_NAME] [grantee USER_NAME] [key VALUE]
+
+ where DEL_HISTORY_ITEM is:
+ |[last| keep][event EVENT][by USER][on|before|after DATE][output FILENAME]|
+ where EVENT is:
+    | approve         |
+    | changelattice   |
+    | changeowner     |
+    | changename      |
+    | changepolicy    |
+    | checkin         |
+    | checkout        |
+    | connect         |
+    | custom          |
+    | create          |
+    | demote          |
+    | disable         |
+    | enable          |
+    | grant           |
+    | ignore          |
+    | lock            |
+    | modify          |
+    | modifyattribute |
+    | movefrom        |
+    | moveto          |
+    | override        |
+    | promote         |
+    | purge           |
+    | reject          |
+    | removefile      |
+    | renamefile      |
+    | reserve         |
+    | revise          |
+    | revision        |
+    | revoke          |
+    | unlock          |
+    | unreserve       |
+    | vcconnection    |
+
+ where ACCESS_ID is:
+    | businessobject BO_NAME [for COMMENT]          |
+    | relationship OBJECTID [for COMMENT]           |
+
+ where OWNERSHIP_ID is:
+    | ORGANIZATION_NAME PROJECT_NAME [for COMMENT]  |
+    | businessobject BO_NAME [for COMMENT]          |
+    | relationship OBJECTID [for COMMENT]           |
+
+validate businessobject BO_NAME fcsdbchecksum | fcsfileexist [file FILENAME];
+
+validate businessobject BO_NAME fcsmetadata;
+
+rechecksum businessobject BO_NAME;
+
+log businessobject BO_NAME BUSINESSOBJECT_EVENT [EVENTMONITOR [EVENTMONITOR] ];
+
+  where EVENTMONITOR is:
+    | eventmonitor NAME                  |
+
+  where BUSINESSOBJECT_EVENT is:
+    | event businessobject custom        |
+MQL<73>modify bus 60860.52778.47735.47620 [mhr18Duration {9}];
+Error: #1900068: modify business object failed
+Error: #1900006: Missing value for '[mhr18Duration {9}]'
+MQL<74>modify bus 60860.52778.47735.47620 [attribute{mhr18Duration}] 9;
+Error: #1900068: modify business object failed
+Error: #1900016: Expected an attribute or a keyword - got '[attribute{mhr18Duration}]'
+MQL<75>modify bus 60860.52778.47735.47620 mhr18Duration 9;
+Warning: #1500218: Business object has no attribute 'mhr18Duration'
+MQL<76>print mhr18Duration;
+Error: #1900003: Expected keyword - got 'mhr18Duration'
+MQL<77>print attribute mhr18Duration;
+attribute mhr18Duration
+  type integer
+  description
+  default
+  notmultiline
+  notmultivalue
+  notrangevalue
+  notresetOnClone
+  notresetOnRevision
+  nothidden
+  created 8/21/2023 12:50:32 PM
+  modified 8/21/2023 12:50:32 PM
+  history  type:create user:creator date:8/21/2023 12:50:32 PM text:add attribute mhr18Duration type integer;
+MQL<78>print context;
+context vault ADMINISTRATION person creator
+MQL<79>set context vault vplm;
+MQL<80>modify bus 60860.52778.47735.47620 mhr18Duration 9;
+Warning: #1500218: Business object has no attribute 'mhr18Duration'
+MQL<81>print type mhr18Training;
+type mhr18Training
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  policy mhr18Policy
+  nothidden
+  created 8/21/2023 12:42:29 PM
+  modified 8/22/2023 2:54:06 PM
+  history  type:create user:creator date:8/21/2023 12:42:29 PM text:add type mhr18Training;
+MQL<82>mod type mhr18Training attribute mhr18Duration;
+Error: #1900068: mod type failed
+Error: #1900078: Keyword 'attribute' not expected
+MQL<83>mod type mhr18Training mhr18Duration;
+Error: #1900068: mod type failed
+Error: #1900003: Expected keyword - got 'mhr18Duration'
+MQL<84>list attribute mhr18Duration;
+mhr18Duration
+MQL<85>delete attribute mhr18Duration;
+MQL<86>mod type mhr18Training mhr18Duration;
+Error: #1900068: mod type failed
+Error: #1900003: Expected keyword - got 'mhr18Duration'
+MQL<87>add attribute mhr18Duration type string;
+MQL<88>mod type mhr18Training mhr18Duration;
+Error: #1900068: mod type failed
+Error: #1900003: Expected keyword - got 'mhr18Duration'
+MQL<89>mod type mhr18Training add attribute mhr18Duration;
+MQL<90>mod bus 60860.52778.47735.47620 mhr18Duration 8;
+MQL<91>temp query bus mhr18Training;
+Error: #1900068: temp query failed
+Error: #1900006: Missing value for 'bus'
+MQL<92>temp query bus mhr18Training * * select vault id;
+businessobject mhr18Training 3DXPD Aug23
+    vault = eService Sample
+    id = 60860.52778.47735.47620
+businessobject mhr18Training 3DXPD Sept23
+    vault = eService Sample
+    id = 60860.52778.1200.23706
+businessobject mhr18Training 3DXPD Jul23
+    vault = vplm
+    id = 39690.42510.47735.47532
+MQL<93>mod bus 60860.52778.1200.23706 mhr18Duration 6;
+MQL<94>mod bus 39690.42510.47735.47532 mhr18Duration 9;
+MQL<95>add attribute mhr18Duration type int;
+Error: #1900068: add attribute failed
+Error: #1900008: Bad value 'int' for 'type'
+MQL<96>add attribute mhr18Duration type integer;
+Error: #1900068: add attribute failed
+Error: #1900005: Name 'mhr18Duration' not unique
+MQL<97>mod attribute mhr18Duration type integer;
+Error: #1900068: mod attribute failed
+Error: #1500007: Cannot change the type of an attribute
+MQL<98>delete attribute mhr18Duration;
+MQL<99>add attribute mhr18Duration type integer;
+MQL<100>mod type mhr18Training add attribute mhr18Duration;
+MQL<101>temp query bus mhr18Training * * select vault id;
+businessobject mhr18Training 3DXPD Aug23
+    vault = eService Sample
+    id = 60860.52778.47735.47620
+businessobject mhr18Training 3DXPD Sept23
+    vault = eService Sample
+    id = 60860.52778.1200.23706
+businessobject mhr18Training 3DXPD Jul23
+    vault = vplm
+    id = 39690.42510.47735.47532
+MQL<102>mod bus 60860.52778.47735.47620 mhr18Duration 8;
+MQL<103>modify bus 60860.52778.1200.23706 mhr18Duration 9;
+MQL<104>modify bus 39690.42510.47735.47532 mhr18Duration 7;
+MQL<105>
