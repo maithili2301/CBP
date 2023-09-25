@@ -1,0 +1,198 @@
+MQL<1>print context;
+context vault ADMINISTRATION person guest
+MQL<2>set context user creator;
+MQL<3>list type mhr18*;
+mhr18Student
+mhr18Trainer
+mhr18Training
+MQL<4>print type mhr18Student;
+type mhr18Student
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  nothidden
+  created 8/22/2023 2:54:05 PM
+  modified 8/22/2023 2:54:06 PM
+  history  type:create user:creator date:8/22/2023 2:54:05 PM text:add type mhr18Student;
+MQL<5>delete type mhr18Student;
+MQL<6>add type mhr18Student;
+MQL<7>add dimension mhr18StudentTrainingTime unit hours 1 offset unit days !default multiplier 8 offset 0;
+Error: #1900068: add dimension failed
+Error: #1900078: Keyword '1' not expected
+MQL<8>add dimension mhr18StudentTrainingTime unit hours multiplier 1 offset unit days !default multiplier 8 offset 0;
+Error: #1900068: add dimension failed
+Error: #1900003: Expected keyword - got 'days'
+MQL<9>add dimension mhr18StudentTrainingTime unit hours multiplier 1 offset 0 unit days !default multiplier 8 offset 0;
+MQL<10>list dimension mhr18*
+;
+mhr18StudentTrainingTime
+mhr18Time
+MQL<11>add attribute mhr18StudentTrainingDuration type integer;
+MQL<12>list attribute mhr18St*;
+mhr18StudentTrainingDuration
+MQL<13>print type mhr18Student;
+type mhr18Student
+  abstract false
+  lowobjectcount false
+  composed false
+  objecthistory true
+  description
+  nothidden
+  created 9/25/2023 9:11:28 AM
+  modified 9/25/2023 9:11:28 AM
+  history  type:create user:creator date:9/25/2023 9:11:28 AM text:add type mhr18Student;
+MQL<14>print dimension mhr18StudentTrainingTime;
+dimension mhr18StudentTrainingTime
+  unit hours
+    label
+    multiplier 1.0
+    offset     0.0
+  unit days
+    label
+    multiplier 8.0
+    offset     0.0
+  description
+  nothidden
+  created 9/25/2023 9:13:50 AM
+  modified 9/25/2023 9:13:50 AM
+  history  type:create user:creator date:9/25/2023 9:13:50 AM text:add dimension mhr18StudentTrainingTime unit hours multiplier 1 offset 0 unit days !default multiplier 8 offset 0;
+MQL<15>print attribute mhr18StudentTrainingDuration;
+attribute mhr18StudentTrainingDuration
+  type integer
+  description
+  default
+  notmultiline
+  notmultivalue
+  notrangevalue
+  notresetOnClone
+  notresetOnRevision
+  nothidden
+  created 9/25/2023 9:14:50 AM
+  modified 9/25/2023 9:14:50 AM
+  history  type:create user:creator date:9/25/2023 9:14:50 AM text:add attribute mhr18StudentTrainingDuration type integer;
+MQL<16>print rel mhr18*;
+Error: #1900068: print relationship failed
+System Error: #1500178: relationship type 'mhr18*' does not exist
+MQL<17>print rel mhr18Training-mhr18Student;
+relationship mhr18Training-mhr18Student
+  abstract false
+  dynamic false
+  compositional false
+  composeeaccess N/A
+  objecthistory true
+  description
+  sparse false
+  from
+    type mhr18Training
+    relationship none
+    meaning was conducted for
+    revision float
+    clone none
+    cardinality one
+    propagate modify true
+    propagate connection true
+  to
+    type none
+    relationship none
+    meaning attended the
+    revision float
+    clone none
+    cardinality many
+    propagate modify false
+    propagate connection false
+  nothidden
+  created 8/22/2023 2:54:06 PM
+  modified 8/22/2023 2:54:06 PM
+  history  type:create user:creator date:8/22/2023 2:54:06 PM text:add rel mhr18Training-mhr18Student attribute mhr18Duration from type mhr18Training meaning "was conducted for" cardinality one revision float clone none propagatemodify propagateconnection to type mhr18Student meaning "attended the" cardinality many revision float clone none notpropagatemodify notpropagateconnection;
+  notpreventduplicates
+MQL<18>delete relationship mhr18Training-mhr18Student;
+MQL<19>list relationship mhr18*;
+mhr18Training-mhr18Trainer
+MQL<20>add rel mhr18Training-mhr18Student attribute mhr18Duration
+from
+type mhr18Training
+meaning "was conducted for"
+cardinality one
+revision float
+clone none
+propagatemodify
+propagateconnection
+to
+type mhr18Student
+meaning "attended the"
+cardinality many
+revision float
+clone none
+notpropagatemodify
+notpropagateconnection;
+MQL<21>list relationship mhr18*;
+mhr18Training-mhr18Student
+mhr18Training-mhr18Trainer
+MQL<22>add policy mhr18StudentPolicy type mhr18Student;
+Warning: #1501010: Policy <mhr18StudentPolicy> has no STATE definition
+MQL<23>list policy mhr18*;
+mhr18Policy
+mhr18StudentPolicy
+MQL<24>mod policy mhr18StudentPolicy add state CREATE public read,show owner all;
+MQL<25>add bus mhr18Student 3DStu Sept23 policy mhr18StudentPolicy vault vplm;
+MQL<26>temp query bus mhr18Student * *;
+mhr18Student 3DStu Sept23
+MQL<27>print bus mhr18Student 3DStu Sept23;
+BusinessObject mhr18Student 3DStu Sept23
+  lattice vplm
+  policy mhr18StudentPolicy
+  description
+  created 9/25/2023 9:23:31 AM
+  modified 9/25/2023 9:23:31 AM
+  owner creator
+  unlocked
+  locking not enforced
+  current state CREATE
+    status enabled
+    attained 9/25/2023 9:23:31 AM
+    minorrevisionable yes
+    majorrevisionable yes
+    published no
+    versionable yes
+    access all
+  in current state
+    minorrevisionable yes
+    majorrevisionable yes
+    versionable yes
+    access all
+  promotable yes
+  revision list
+    mhr18Student 3DStu Sept23
+  history
+    create - user: creator  time: 9/25/2023 9:23:31 AM  state: CREATE  revisioned from:
+MQL<28>temp query bus mhr18Student * * select attribute[mhr18StudentTrainingDuration] id;
+businessobject mhr18Student 3DStu Sept23
+    attribute[mhr18StudentTrainingDuration] =
+    id = 39690.42510.65342.26019
+MQL<29>mod type mhr18Student add attribute mhr18StudentTrainingDuration;
+MQL<30>mod bus 39690.42510.65342.26019 mhr18StudentTrainingDuration 7;
+MQL<31>temp query bus mhr18Student * * select attribute[mhr18StudentTrainingDuration] id;
+businessobject mhr18Student 3DStu Sept23
+    attribute[mhr18StudentTrainingDuration] = 7
+    id = 39690.42510.65342.26019
+MQL<32>print policy mhr18StudentPolicy;
+policy mhr18StudentPolicy
+  description
+  type mhr18Student
+  locking not enforced
+  state CREATE
+    minorrevisionable true
+    majorrevisionable true
+    versionable true
+    promote false
+    checkout history true
+    published false
+    public read,show
+    owner all
+  nothidden
+  created 9/25/2023 9:21:37 AM
+  modified 9/25/2023 9:22:37 AM
+  history  type:create user:creator date:9/25/2023 9:21:37 AM text:add policy mhr18StudentPolicy type mhr18Student;
+  history  type:modify user:creator date:9/25/2023 9:22:37 AM text:mod policy mhr18StudentPolicy add state CREATE public read,show owner all;
